@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    @page {
+      size: 58mm auto;
+      margin: 5mm;
+    }
+
+    body {
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .struk {
+      width: 58mm;
+      margin: auto;
+    }
+
+    pre {
+      white-space: pre;
+    }
+  </style>
+</head>
+<body>
+
+<div class="struk">
+<pre>
+        STRUK PARKIR
+   Sistem Parkir Otomatis
+--------------------------------
+
+Plat    : {{transaksi.plat}}
+Jenis   : {{transaksi.jenis}}
+Area    : {{transaksi.area}}
+
+--------------------------------
+Masuk   : {{transaksi.masuk}}
+Keluar  : {{transaksi.keluar}}
+Durasi  : {{transaksi.durasi}} jam
+
+--------------------------------
+Tarif/Jam : Rp {{transaksi.tarif}}
+TOTAL     : Rp {{transaksi.total}}
+
+--------------------------------
+Petugas : {{transaksi.petugas}}
+Tanggal : {{transaksi.tanggal}}
+
+        ---- Terima Kasih ----
+ Simpan struk ini sebagai bukti
+</pre>
+</div>
+
+</body>
+</html>

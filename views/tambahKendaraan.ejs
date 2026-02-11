@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Tambah Kendaraan</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+
+</head>
+
+<body class="bg-light">
+
+    <%- include('layout/navbar') %>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+
+                    <div class="card shadow-sm border-0">
+
+                        <div class="card-header bg-dark text-warning text-center fw-bold">
+                            <i class="fa-solid fa-tags me-2"></i> Form Tambah Kendaraan
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/kendaraan/tambah" method="POST">
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Plat Nomor</label>
+                                    <input type="text" name="plat_nomor" class="form-control" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Jenis Kendaraan</label>
+                                    <input type="text" name="jenis_kendaraan" class="form-control" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Warna</label>
+                                    <input type="text" name="warna" class="form-control" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Pemilik</label>
+                                    <input type="text" name="pemilik" class="form-control" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold">
+                                    <i class="fa-solid fa-plus me-1"></i> Tambah Kendaraan
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

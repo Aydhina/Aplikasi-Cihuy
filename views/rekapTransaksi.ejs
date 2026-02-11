@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Rekap Transaksi</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<%- include('layout/navbar') %>
+
+<div class="container my-5">
+  <div class="card shadow-sm">
+    <div class="card-body">
+
+      <h4 class="fw-bold mb-4">Rekap Transaksi Parkir</h4>
+
+      <form method="POST" class="row g-3 mb-4">
+        <div class="col-md-4">
+          <input type="date" name="tanggal_awal" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <input type="date" name="tanggal_akhir" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-warning w-100">Tampilkan</button>
+        </div>
+      </form>
+
+      <table class="table table-bordered text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>Plat</th>
+            <th>Area</th>
+            <th>Tanggal</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% transaksi.forEach(t => { %>
+            <tr>
+              <td><%= t.id_kendaraan.plat_nomor %></td>
+              <td><%= t.id_area.nama_area %></td>
+              <td><%= t.waktu_keluar.toLocaleDateString('id-ID') %></td>
+              <td>Rp <%= t.biaya_total.toLocaleString('id-ID') %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+
+      <h5 class="text-end">
+        Total Pendapatan: 
+        <strong>Rp <%= total.toLocaleString('id-ID') %></strong>
+      </h5>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

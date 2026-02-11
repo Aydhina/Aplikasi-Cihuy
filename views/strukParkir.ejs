@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Struk Parkir</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+<div class="card shadow-sm mx-auto my-4" style="width:320px;font-family:monospace">
+  <div class="card-body p-3">
+
+    <div class="text-center small text-muted mb-2">
+      <%= new Date(transaksi.waktu_keluar).toLocaleDateString(
+        'id-ID',
+        { day:'2-digit', month:'long', year:'numeric' }
+      ) %>
+    </div>
+
+    <h5 class="text-center fw-bold mb-2">STRUK PARKIR</h5>
+    <hr class="my-2">
+
+    <p class="mb-2">
+      <strong>Plat Nomor</strong><br>
+      <%= transaksi.id_kendaraan.plat_nomor %>
+    </p>
+
+    <p class="mb-2">
+      <strong>Jenis Kendaraan</strong><br>
+      <%= transaksi.id_kendaraan.jenis_kendaraan %>
+    </p>
+
+    <p class="mb-2">
+      <strong>Area Parkir</strong><br>
+      <%= transaksi.id_area.nama_area %>
+    </p>
+
+    <hr class="my-2">
+
+    <div class="small">Masuk : <%= transaksi.waktu_masuk.toLocaleString('id-ID') %></div>
+    <div class="small">Keluar : <%= transaksi.waktu_keluar.toLocaleString('id-ID') %></div>
+    <div class="small mb-2">Durasi : <%= transaksi.durasi_jam %> jam</div>
+
+    <hr class="my-2">
+
+    <div class="d-flex justify-content-between small">
+      <span>Tarif / Jam</span>
+      <span>Rp <%= transaksi.id_tarif.tarif_per_jam.toLocaleString('id-ID') %></span>
+    </div>
+
+    <div class="d-flex justify-content-between fw-bold mb-2">
+      <span>Total</span>
+      <span>Rp <%= transaksi.biaya_total.toLocaleString('id-ID') %></span>
+    </div>
+
+    <hr class="my-2">
+
+    <p class="text-center small mb-3">— Terima Kasih —</p>
+
+    <div class="d-flex gap-2">
+      <a href="/transaksi/daftar" class="btn btn-outline-warning btn-sm w-100">Kembali</a>
+      <a href="/transaksi/cetak-struk/<%= transaksi._id %>" class="btn btn-success btn-sm w-100">
+        Cetak PDF
+      </a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

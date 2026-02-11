@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Tambah Area Parkir</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+
+</head>
+
+<body class="bg-light">
+
+    <%- include('layout/navbar') %>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+
+                    <div class="card shadow-sm border-0">
+
+                        <div class="card-header bg-dark text-warning text-center fw-bold">
+                            <i class="fa-solid fa-tags me-2"></i> Form Tambah Area Parkir
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/area/tambah" method="POST">
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Nama Area Parkir</label>
+                                    <input type="text" name="nama_area" class="form-control"
+                                        placeholder="Masukkan nama area parkir" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Kapasitas</label>
+                                    <input type="number" name="kapasitas" class="form-control"
+                                        placeholder="Masukkan kapasitas" required>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Terisi</label>
+                                    <input type="number" name="terisi" class="form-control"
+                                        placeholder="Masukkan jumlah terisi" value="0" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold">
+                                    <i class="fa-solid fa-plus me-1"></i> Tambah Area Parkir
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

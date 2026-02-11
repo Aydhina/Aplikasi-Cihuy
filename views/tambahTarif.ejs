@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Tambah Tarif</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+</head>
+
+<body class="bg-light">
+
+    <%- include('layout/navbar') %>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+
+                    <div class="card shadow-sm border-0">
+
+                        <div class="card-header bg-dark text-warning text-center fw-bold">
+                            <i class="fa-solid fa-tags me-2"></i> Form Tambah Tarif
+                        </div>
+
+                        <div class="card-body">
+                            <form action="/tarif/tambah" method="POST">
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Jenis Kendaraan</label>
+                                    <select name="jenis_kendaraan" class="form-control" required>
+                                        <option value="">-- Pilih --</option>
+                                        <option value="motor">Motor</option>
+                                        <option value="mobil">Mobil</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Tarif Per Jam</label>
+                                    <input type="number" name="tarif_per_jam" class="form-control"
+                                        placeholder="Masukkan tarif" required>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold">
+                                    <i class="fa-solid fa-plus me-1"></i> Tambah Tarif
+                                </button>
+
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

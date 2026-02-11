@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-warning" href="/transaksi/daftar">
+      E - Park
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-2">
+
+        <!-- petugas -->
+        <% if(user && user.role==='petugas' ){ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/transaksi/daftar">CRUD Transaksi</a>
+          </li>
+          <% } %>
+
+            <!-- admin -->
+            <% if(user && user.role==='admin' ){ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/tarif/daftar">CRUD Tarif</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/area/daftar">CRUD Area Parkir</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/kendaraan/daftar">CRUD Kendaraan</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logAktivitas/daftar">Log Aktivitas</a>
+              </li>
+              <% } %>
+
+                <!-- owner -->
+                <% if(user && user.role==='owner' ){ %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/rekap">Rekap Transaksi</a>
+                  </li>
+                  <% } %>
+      </ul>
+
+      <div class="d-flex align-items-center gap-2">
+        <span class="text-light small me-2 text-capitalize">
+          <i class="fa fa-user me-1"></i>
+          <%= user.role %>
+        </span>
+        <a href="/auth/logout" class="btn btn-outline-warning btn-sm">
+          Logout
+        </a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>

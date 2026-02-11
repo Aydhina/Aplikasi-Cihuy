@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daftar Transaksi</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+</head>
+
+<body class="bg-light">
+
+  <%- include('layout/navbar') %>
+
+    <div class="container my-5">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Daftar Transaksi Parkir</h4>
+            <a href="/transaksi/tambah" class="btn btn-warning btn-sm fw-semibold">
+              <i class="fa fa-plus me-1"></i> Transaksi Masuk
+            </a>
+          </div>
+
+          <form method="GET" class="row g-2 mb-3">
+            <div class="col-md-4">
+              <input type="text" name="search" value="<%= search || '' %>" class="form-control"
+                placeholder="Cari plat nomor...">
+            </div>
+
+            <div class="col-md-3">
+              <select name="sort" class="form-select">
+                <option value="terbaru" <%=sort==='terbaru' ?'selected':'' %>>Terbaru</option>
+                <option value="terlama" <%=sort==='terlama' ?'selected':'' %>>Terlama</option>
+                <option value="termahal" <%=sort==='termahal' ?'selected':'' %>>Termahal</option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <button class="btn btn-dark w-100">
+                <i class="fa fa-search"></i> Cari
+              </button>
+            </div>
+          </form>
+
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+              <thead class="table-dark">
+                <tr>
+                  <th>Plat</th>
+                  <th>Area</th>
+                  <th>Masuk</th>
+                  <th>Keluar</th>
+                  <th>Durasi (Jam)</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th style="width: 140px">Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% transaksi.forEach((row)=> { %>
+                  <tr>
+                    <td class="fw-semibold">
+                      <%= row.id_kendaraan.plat_nomor %>
+                    </td>
+                    <td>
+                      <%= row.id_area.nama_area %>
+                    </td>
+                    <td>
+                      <%= row.waktu_masuk.toLocaleString('id-ID') %>
+                    </td>
+                    <td>
+                      <%= row.waktu_keluar ? row.waktu_keluar.toLocaleString('id-ID') : '-' %>
+                    </td>
+                    <td>
+                      <%= row.durasi_jam || '-' %>
+                    </td>
+                    <td>
+                      <%= row.biaya_total ? 'Rp ' + row.biaya_total.toLocaleString('id-ID') : '-' %>
+                    </td>
+                    <td>
+                      <span class="badge bg-<%= row.status === 'masuk' ? 'primary' : 'success' %>">
+                        <%= row.status %>
+                      </span>
+                    </td>
+                    <td>
+                      <% if(row.status==='masuk' ){ %>
+                        <a href="/transaksi/keluar/<%= row._id %>" class="btn btn-sm btn-success">
+                          <i class="fa fa-sign-out-alt"></i>
+                        </a>
+                        <% } %>
+                          <a href="/transaksi/delete/<%= row._id %>" class="btn btn-sm btn-danger ms-1">
+                            <i class="fa fa-trash"></i>
+                          </a>
+                          <% if(role==='petugas' && row.status==='keluar' ){ %>
+                            <a href="/transaksi/struk/<%= row._id %>" target="_blank" class="btn btn-sm btn-dark ms-1">
+                              <i class="fa fa-print"></i>
+                            </a>
+                            <% } %>
+
+                    </td>
+                  </tr>
+                  <% }) %>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>

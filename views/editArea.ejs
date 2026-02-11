@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Edit Area Parkir</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+
+</head>
+
+<body class="bg-light">
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+
+                        <h4 class="fw-bold mb-4 text-center">Edit Area Parkir</h4>
+
+                        <form action="/area/edit/<%= area._id %>" method="POST">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Nama Area Parkir</label>
+                                <input type="text" class="form-control" name="nama_area" value="<%= area.nama_area %>"
+                                    required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Kapasitas</label>
+                                <input type="number" class="form-control" name="kapasitas" value="<%= area.kapasitas %>"
+                                    required />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Terisi</label>
+                                <input type="number" class="form-control" name="terisi" value="<%= area.terisi %>"
+                                    required />
+                            </div>
+
+                            <button type="submit" class="btn btn-warning btn-lg w-100 fw-semibold">
+                                Simpan Perubahan
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

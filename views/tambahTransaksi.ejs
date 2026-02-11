@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transaksi Masuk</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/fontawesome/css/all.min.css">
+</head>
+
+<body class="bg-light">
+
+    <%- include('layout/navbar') %>
+
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+
+                    <div class="card shadow-sm border-0">
+
+                        <div class="card-header bg-dark text-warning text-center fw-bold">
+                            <i class="fa-solid fa-car me-2"></i> Transaksi Parkir Masuk
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="/transaksi/tambah" method="POST">
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Kendaraan</label>
+                                    <select name="id_kendaraan" class="form-control" required>
+                                        <option value="">-- Pilih Kendaraan --</option>
+                                        <% kendaraan.forEach(k=> { %>
+                                            <option value="<%= k._id %>">
+                                                <%= k.plat_nomor %> - <%= k.jenis_kendaraan %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Tarif</label>
+                                    <select name="id_tarif" class="form-control" required>
+                                        <option value="">-- Pilih Tarif --</option>
+                                        <% tarif.forEach(t=> { %>
+                                            <option value="<%= t._id %>">
+                                                <%= t.jenis_kendaraan %> - Rp <%=
+                                                        t.tarif_per_jam.toLocaleString('id-ID') %>/jam
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold">Area Parkir</label>
+                                    <select name="id_area" class="form-control" required>
+                                        <option value="">-- Pilih Area --</option>
+                                        <% area.forEach(a=> { %>
+                                            <option value="<%= a._id %>">
+                                                <%= a.nama_area %>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold">
+                                    <i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Simpan Transaksi
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
