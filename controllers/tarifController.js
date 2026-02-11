@@ -66,20 +66,27 @@ const tarifController = {
   },
 
   deleteTarif: async (req, res) => {
-    try {
-      await Tarif.findByIdAndDelete(req.params.id);
+  try {
+    const tarif = await Tarif.findById(req.params.id);
 
-      await simpanLog(
-        req.session.user.id,
-        `Menghapus tarif ${tarif ? tarif.jenis_kendaraan : req.params.id}`,
-      );
-
-      res.redirect("/tarif/daftar");
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Gagal menghapus tarif");
+    if (!tarif) {
+      return res.status(404).send("Tarif tidak ditemukan");
     }
-  },
+
+    await Tarif.findByIdAndDelete(req.params.id);
+
+    await simpanLog(
+      req.session.user.id,
+      `Menghapus tarif ${tarif.jenis_kendaraan}`
+    );
+
+    res.redirect("/tarif/daftar");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Gagal menghapus tarif");
+  }
+},
+
 };
 
 module.exports = tarifController;

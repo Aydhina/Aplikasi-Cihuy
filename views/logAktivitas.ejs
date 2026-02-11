@@ -46,8 +46,8 @@
                                                     <%= i + 1 %>
                                                 </td>
                                                 <td>
-                                                        <%= log.id_user ? (log.id_user.nama_lengkap ||
-                                                            log.id_user.username) : "User Tidak Dikenal" %>
+                                                    <%= log.id_user ? (log.id_user.nama_lengkap || log.id_user.username)
+                                                        : "User Tidak Dikenal" %>
                                                 </td>
                                                 <td>
                                                     <%= log.aktivitas %>
@@ -60,6 +60,43 @@
                                                 <% } %>
                             </tbody>
                         </table>
+
+                        <% if (totalPage> 1) { %>
+                            <nav class="mt-4">
+                                <ul class="pagination justify-content-center">
+
+                                    <!-- Previous -->
+                                    <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                                        <a class="page-link bg-dark text-warning border-dark"
+                                            href="?page=<%= currentPage - 1 %>">
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                    <!-- Nomor Halaman -->
+                                    <% for (let i=1; i <=totalPage; i++) { %>
+                                        <li class="page-item">
+                                            <a class="page-link 
+                                                <%= currentPage === i 
+                                                        ? 'bg-warning text-dark border-warning fw-bold' 
+                                                        : 'bg-dark text-warning border-dark' %>" href="?page=<%= i %>">
+                                                <%= i %>
+                                            </a>
+                                        </li>
+                                        <% } %>
+
+                                            <!-- Next -->
+                                            <li class="page-item <%= currentPage === totalPage ? 'disabled' : '' %>">
+                                                <a class="page-link bg-dark text-warning border-dark"
+                                                    href="?page=<%= currentPage + 1 %>">
+                                                    Next
+                                                </a>
+                                            </li>
+
+                                </ul>
+                            </nav>
+                            <% } %>
+
                     </div>
 
                 </div>

@@ -4,6 +4,8 @@ const checkRole = (...roles) => {
         if (userRole && roles.includes(userRole)) {
             next();
         } else {
+            console.log("Role saat ini:", req.session.user?.role);
+
             res.status(403).send("Akses ditolak");
         }
     };

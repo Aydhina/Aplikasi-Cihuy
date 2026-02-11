@@ -129,95 +129,108 @@ const transaksiController = {
   },
 
   getStrukParkir: async (req, res) => {
-  try {
-    const id = req.params.id;
+    try {
+      const id = req.params.id;
 
-    const transaksi = await Transaksi.findById(id)
-      .populate("id_kendaraan")
-      .populate("id_tarif")
-      .populate("id_area")
-      .populate("id_user");
+      const transaksi = await Transaksi.findById(id)
+        .populate("id_kendaraan")
+        .populate("id_tarif")
+        .populate("id_area")
+        .populate("id_user");
 
-    if (!transaksi) {
-      return res.status(404).send("Transaksi tidak ditemukan");
+      if (!transaksi) {
+        return res.status(404).send("Transaksi tidak ditemukan");
+      }
+
+      res.render("strukParkir", { transaksi });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Terjadi kesalahan");
     }
+  },
 
-    res.render("strukParkir", { transaksi });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Terjadi kesalahan");
-  }
-},
+  cetakStrukParkir: async (req, res) => {
+    try {
+      const id = req.params.id;
 
-cetakStrukParkir: async (req, res) => {
-  try {
-    const id = req.params.id;
+      const transaksi = await Transaksi.findById(id)
+        .populate("id_kendaraan")
+        .populate("id_tarif")
+        .populate("id_area")
+        .populate("id_user");
 
-    const transaksi = await Transaksi.findById(id)
-      .populate("id_kendaraan")
-      .populate("id_tarif")
-      .populate("id_area")
-      .populate("id_user");
+      if (!transaksi) {
+        return res.status(404).send("Data transaksi tidak ditemukan");
+      }
 
-    if (!transaksi) {
-      return res.status(404).send("Data transaksi tidak ditemukan");
-    }
+      const html = fs.readFileSync(
+        path.join(__dirname, "../template/templateStrukParkirPDF.html"),
+        "utf8",
+      );
 
-    const html = fs.readFileSync(
-      path.join(__dirname, "../template/templateStrukParkirPDF.html"),
-      "utf8"
-    );
-
-    const document = {
-      html,
-      data: {
-        transaksi: {
-          plat: transaksi.id_kendaraan.plat_nomor,
-          jenis: transaksi.id_kendaraan.jenis_kendaraan,
-          area: transaksi.id_area.nama_area,
-          masuk: transaksi.waktu_masuk.toLocaleString("id-ID"),
-          keluar: transaksi.waktu_keluar.toLocaleString("id-ID"),
-          durasi: transaksi.durasi_jam,
-          tarif: transaksi.id_tarif.tarif_per_jam,
-          total: transaksi.biaya_total,
-          petugas: transaksi.id_user.nama_user,
-          tanggal: transaksi.waktu_keluar.toLocaleDateString("id-ID"),
+      const document = {
+        html,
+        data: {
+          transaksi: {
+            plat: transaksi.id_kendaraan.plat_nomor,
+            jenis: transaksi.id_kendaraan.jenis_kendaraan,
+            area: transaksi.id_area.nama_area,
+            masuk: transaksi.waktu_masuk.toLocaleString("id-ID"),
+            keluar: transaksi.waktu_keluar.toLocaleString("id-ID"),
+            durasi: transaksi.durasi_jam,
+            tarif: transaksi.id_tarif.tarif_per_jam,
+            total: transaksi.biaya_total,
+            petugas: transaksi.id_user.nama_user,
+            tanggal: transaksi.waktu_keluar.toLocaleDateString("id-ID"),
+          },
         },
-      },
-      path: "./output/struk_parkir.pdf",
-    };
+        path: "./output/struk_parkir.pdf",
+      };
 
-    await pdf.create(document, {});
-    res.download("./output/struk_parkir.pdf");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Gagal mencetak struk parkir");
-  }
-},
+      await pdf.create(document, {});
+      res.download("./output/struk_parkir.pdf");
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Gagal mencetak struk parkir");
+    }
+  },
 
+  getRekap: async (req, res) => {
+    try {
+      const transaksi = await Transaksi.find({ status: "keluar" })
+        .populate("id_kendaraan")
+        .populate("id_area");
 
-  getRekap: (req, res) => {
-    res.render("rekapTransaksi", { transaksi: [], total: 0 });
+      const total = transaksi.reduce((sum, t) => sum + (t.biaya_total || 0), 0);
+
+      res.render("rekapTransaksi", { transaksi, total });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Gagal mengambil data rekap");
+    }
   },
 
   postRekap: async (req, res) => {
     try {
       const { tanggal_awal, tanggal_akhir } = req.body;
 
-      // 🔑 SET RANGE FULL DAY
-      const start = new Date(tanggal_awal);
-      start.setHours(0, 0, 0, 0);
+      let filter = { status: "keluar" };
 
-      const end = new Date(tanggal_akhir);
-      end.setHours(23, 59, 59, 999);
+      // Jika tanggal diisi, baru pakai filter tanggal
+      if (tanggal_awal && tanggal_akhir) {
+        const start = new Date(tanggal_awal);
+        start.setHours(0, 0, 0, 0);
 
-      const transaksi = await Transaksi.find({
-        status: "keluar",
-        waktu_keluar: {
-          $gte: start, 
+        const end = new Date(tanggal_akhir);
+        end.setHours(23, 59, 59, 999);
+
+        filter.waktu_keluar = {
+          $gte: start,
           $lte: end,
-        },
-      })
+        };
+      }
+
+      const transaksi = await Transaksi.find(filter)
         .populate("id_kendaraan")
         .populate("id_area");
 

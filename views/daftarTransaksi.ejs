@@ -71,7 +71,7 @@
                       <%= row.id_kendaraan.plat_nomor %>
                     </td>
                     <td>
-                      <%= row.id_area.nama_area %>
+                      <%= row.id_area?.nama_area || "Area Dihapus" %>
                     </td>
                     <td>
                       <%= row.waktu_masuk.toLocaleString('id-ID') %>

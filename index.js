@@ -32,7 +32,7 @@ app.use(session({
     secret: 'rahasia-parkir', 
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: false } 
+    cookie: { secure: false, maxAge: 1000 * 60 * 60  } 
 }));
 
 app.use((req,res, next) => { 
