@@ -63,7 +63,6 @@ const authController = {
 
       await simpanLog(user._id, "Login ke sistem");
 
-      // 🔑 REDIRECT BERDASARKAN ROLE
       if (user.role === "admin") {
         return res.redirect("/tarif/daftar");
       }
@@ -76,7 +75,6 @@ const authController = {
         return res.redirect("/transaksi/rekap");
       }
 
-      // fallback
       res.redirect("/auth/login");
     } catch (error) {
       console.log(error);
